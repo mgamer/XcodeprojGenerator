@@ -4,11 +4,6 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Source.xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>1</integer>
-		</dict>
 		<key>testApplication.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -17,17 +12,12 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>37137F4FFE5610C2E34B6E3E</key>
+		<key>875B3EF27D85124D7464199A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>84FA4796F972F3FFACE7833C</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>95B53A5F7F0EB6AED4FE5FE5</key>
+		<key>C23A9A809A2D5A9251473D93</key>
 		<dict>
 			<key>primary</key>
 			<true/>
