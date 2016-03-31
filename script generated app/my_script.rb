@@ -5,6 +5,21 @@ require 'xcodeproj'
 
 module Xcodeproj
 	class Project
+
+		def self.add_new_group(currentGroup, path)
+			newGroupName = path.split('/').last
+			newGroup = currentGroup.new_group(newGroupName)
+			newGroup
+		end
+
+		def self.add_files_to_group(currentGroup, path)
+			Dir.glob(path + '/*') do |file|
+				puts file
+			end
+
+		end
+
+
 		def self.create_project(path)
 			project = Xcodeproj::Project.new(path)
 			applicationTarget = project.new_target(:application, 'testApplication', :ios, '9.2', nil, :swift)
@@ -15,9 +30,14 @@ module Xcodeproj
 			# file_references = project.new_file("./src/")
 
 			sourceGroup = project.new_group('src')
-
 			Dir.glob('./src/*') do |file|
-				ref = sourceGroup.new_reference(file)
+				if File.directory?(file)
+					newGroup = Xcodeproj::Project.add_new_group(sourceGroup, file)
+					Xcodeproj::Project.add_files_to_group(newGroup, file)
+				else
+
+				end
+				# ref = sourceGroup.new_reference(file)
 			end
 
 			buildSettingsConfig = {
