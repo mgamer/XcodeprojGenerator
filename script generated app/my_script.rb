@@ -1,6 +1,5 @@
 require 'rubygems'
 require 'xcodeproj'
-require 'find'
 
 
 
@@ -11,29 +10,14 @@ module Xcodeproj
 			applicationTarget = project.new_target(:application, 'testApplication', :ios, '9.2', nil, :swift)
 
 			applicationTarget.add_system_framework('Foundation')
-
-
-			# buildPhase = applicationTarget.new_copy_files_build_phase()
-			# buildPhase.add_file_reference("./src/class.swift")
 			
-			file_references = project.new_file("./src/")
-
+			#
+			# file_references = project.new_file("./src/")
 
 			sourceGroup = project.new_group('src')
 
-
-
-			 #read all source directories and files
-			
-
-
-
-
-
-			# applicationTarget.source_build_phase.add_file_reference("./src/AppDelegate.swift")
-
-			Dir.glob('./test/src/**/*.swift') do |file|
-				sourceGroup.new_reference(file)
+			Dir.glob('./src/*') do |file|
+				ref = sourceGroup.new_reference(file)
 			end
 
 			buildSettingsConfig = {
@@ -53,7 +37,6 @@ module Xcodeproj
 				'GCC_SYMBOLS_PRIVATE_EXTERN' => 'NO',
 				'GCC_OPTIMIZATION_LEVEL' => '0',
 			    'INFOPLIST_FILE' => 'src/Info.plist'
-
 			}
 			
 			buildSettingsConfig.each do |key, array|
@@ -69,11 +52,10 @@ module Xcodeproj
 			# 	project.objects[3].set_setting(key,value)
 			# }
 
-      		project.save(path + "/#{File.basename(path)}.xcodeproj")      
+      		project.save(path + "/test.xcodeproj")      
 			project
 		end
 	end
 end
 
-Xcodeproj::Project.create_project('./test/')
-
+Xcodeproj::Project.create_project('.')
