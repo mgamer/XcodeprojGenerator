@@ -12,9 +12,17 @@ module Xcodeproj
 			newGroup
 		end
 
-		def self.add_files_to_group(currentGroup, path)
+		def self.add_files_to_group(currentGroup, path, applicationTarget)
 			Dir.glob(path + '/*') do |file|
-				puts file
+				if File.directory?(file) 
+					newGroup = Xcodeproj::Project.add_new_group(currentGroup, file)
+					Xcodeproj::Project.add_files_to_group(newGroup, file, applicationTarget)
+				else
+					ref = currentGroup.new_reference(file)
+					if file.include? ".swift"
+						applicationTarget.source_build_phase.add_file_reference(ref)
+					end
+				end
 			end
 
 		end
@@ -25,20 +33,9 @@ module Xcodeproj
 			applicationTarget = project.new_target(:application, 'testApplication', :ios, '9.2', nil, :swift)
 
 			applicationTarget.add_system_framework('Foundation')
-			
-			#
-			# file_references = project.new_file("./src/")
 
 			sourceGroup = project.new_group('src')
-			Dir.glob('./src/*') do |file|
-				if File.directory?(file)
-					newGroup = Xcodeproj::Project.add_new_group(sourceGroup, file)
-					Xcodeproj::Project.add_files_to_group(newGroup, file)
-				else
-
-				end
-				# ref = sourceGroup.new_reference(file)
-			end
+			Xcodeproj::Project.add_files_to_group(sourceGroup, './src/', applicationTarget)
 
 			buildSettingsConfig = {
 				'ALWAYS_SEARCH_USER_PATHS' => 'YES',
@@ -60,9 +57,9 @@ module Xcodeproj
 			}
 			
 			buildSettingsConfig.each do |key, array|
-				# print "#{key}=>"
-				# puts array
-				project.objects[3].set_setting(key,array)
+				print "#{key}=>"
+				puts array
+				project.objects[3].set_setting(key,array) #fix it 
 			end
 
 			# puts project.build_settings("Release")
