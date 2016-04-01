@@ -30,11 +30,11 @@ module Xcodeproj
 
 		def self.create_project(path)
 			project = Xcodeproj::Project.new(path)
-			applicationTarget = project.new_target(:application, 'testApplication', :ios, '9.2', nil, :swift)
+			applicationTarget = project.new_target(:application, 'TestApp', :ios, '9.2', nil, :swift)
 
-			applicationTarget.add_system_framework('Foundation')
+			# applicationTarget.add_system_framework('Foundation')
 
-			sourceGroup = project.new_group('src')
+			sourceGroup = project.new_group('Source')
 			Xcodeproj::Project.add_files_to_group(sourceGroup, './src/', applicationTarget)
 
 			buildSettingsConfig = {
@@ -69,7 +69,7 @@ module Xcodeproj
 			# 	project.objects[3].set_setting(key,value)
 			# }
 
-      		project.save(path + "/test.xcodeproj")      
+      		project.save(path + "/TestApp.xcodeproj")      
 			project
 		end
 	end
