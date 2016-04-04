@@ -1,5 +1,5 @@
 Xcodeproj gem : generate .xcodeproj file
-
+---
 1. Go to 'Example' directory
 
 2. Remove TestApp.xcodeproj if exist
@@ -9,3 +9,11 @@ Xcodeproj gem : generate .xcodeproj file
      `ruby my_script.rb`
 
 4. TextApp.xcodeproj generated !
+
+
+
+TODO
+---
+>generate xcworkspace<br>
+>support cocoapods<br>
+>support settings.bundle<br>
